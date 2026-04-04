@@ -11,12 +11,14 @@ class ApisHubApi extends ApiKeyClient
      * @param string $baseUrl The base URL of the APIs Hub Node (without /api path)
      * @param string $apiKey The admin API key (X-Admin-API-Key)
      * @param \GuzzleHttp\Client|null $guzzleClient Optional Guzzle client for testing
+     * @param bool $debugMode Enable SDK debug mode
      * @throws \Exception
      */
     public function __construct(
         string $baseUrl,
         string $apiKey,
-        ?\GuzzleHttp\Client $guzzleClient = null
+        ?\GuzzleHttp\Client $guzzleClient = null,
+        bool $debugMode = false
     ) {
         parent::__construct(
             baseUrl: rtrim($baseUrl, '/') . '/',
@@ -29,7 +31,8 @@ class ApisHubApi extends ApiKeyClient
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
             ],
-            guzzleClient: $guzzleClient
+            guzzleClient: $guzzleClient,
+            debugMode: $debugMode
         );
     }
 
@@ -37,7 +40,7 @@ class ApisHubApi extends ApiKeyClient
      * 🛰️ Management: Trigger a background redeployment.
      * @throws GuzzleException
      */
-    public function redeploy(): array
+    public function triggerRedeploy(): array
     {
         $response = $this->performRequest(method: 'POST', endpoint: 'api/management/redeploy');
         return json_decode($response->getBody()->getContents(), true);

@@ -52,7 +52,7 @@ class ApisHubApiTest extends TestCase
         $this->assertEquals($this->apiKey, $lastRequest->getHeaderLine('X-Admin-API-Key'));
     }
 
-    public function testRedeployTrigger(): void
+    public function testTriggerRedeploy(): void
     {
         $responseData = ['success' => true];
         $mock = new MockHandler([
@@ -60,7 +60,7 @@ class ApisHubApiTest extends TestCase
         ]);
         
         $client = $this->createMockedClient(mock: $mock);
-        $response = $client->redeploy();
+        $response = $client->triggerRedeploy();
         
         $this->assertEquals($responseData, $response);
         $lastRequest = $mock->getLastRequest();
