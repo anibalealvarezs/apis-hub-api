@@ -1,9 +1,9 @@
-/vendor/
-/.idea/
-/.vscode/
+/vendor
+/.idea
+/.vscode
 /.phpunit.result.cache
 /config/config.yaml
 /*.log
 /tests-integration.log
-/tmp/
+/tmp
 /phpstan.neon

@@ -47,6 +47,21 @@ class ApisHubApi extends ApiKeyClient
     }
 
     /**
+     * 🛰️ Management: Perform a TOTAL reset of a specific channel (Atomic Cleanup).
+     * @param string $channel
+     * @throws GuzzleException
+     */
+    public function resetChannel(string $channel): array
+    {
+        $response = $this->performRequest(
+            method: 'POST', 
+            endpoint: 'api/management/reset-channel',
+            body: json_encode(['channel' => $channel])
+        );
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
      * 🛰️ Management: Update remote environment credentials.
      * @throws GuzzleException
      */
@@ -351,6 +366,20 @@ class ApisHubApi extends ApiKeyClient
     public function exportConfig(): array
     {
         $response = $this->performRequest(method: 'POST', endpoint: 'api/config-manager/export');
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
+     * 🛰️ Management: Perform action on a specific container (e.g. "start", "stop").
+     * @throws GuzzleException
+     */
+    public function containerAction(string $name, string $action): array
+    {
+        $response = $this->performRequest(
+            method: 'POST',
+            endpoint: 'api/management/container/action',
+            body: json_encode(['name' => $name, 'action' => $action])
+        );
         return json_decode($response->getBody()->getContents(), true);
     }
 
