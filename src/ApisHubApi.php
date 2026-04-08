@@ -295,7 +295,7 @@ class ApisHubApi extends ApiKeyClient
             endpoint: "api/auth/{$provider}/import",
             body: json_encode(array_merge(['access_token' => $token], $payload)),
             headers: [
-                'X-Config-Token' => $this->apiKey // Using Config Token auth here
+                'X-Admin-API-Key' => $this->apiKey // Using standard Admin API Key auth
             ]
         );
         return json_decode($response->getBody()->getContents(), true);
