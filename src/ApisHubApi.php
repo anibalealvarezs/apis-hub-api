@@ -282,6 +282,25 @@ class ApisHubApi extends ApiKeyClient
     }
 
     /**
+     * 🛰️ Management: Import social credentials (zero-downtime hot-reload).
+     * @param string $provider e.g. "facebook"
+     * @param array $payload Access token and user ID data
+     * @throws GuzzleException
+     */
+    public function importCredentials(string $provider, array $payload): array
+    {
+        $response = $this->performRequest(
+            method: 'POST',
+            endpoint: "api/auth/{$provider}/import",
+            body: json_encode($payload),
+            headers: [
+                'X-Config-Token' => $this->apiKey // Using Config Token auth here
+            ]
+        );
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
      * 🔍 Monitoring: Fetch real-time job/log state.
      * @throws GuzzleException
      */
