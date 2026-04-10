@@ -7,3 +7,4 @@
 /tests-integration.log
 /tmp
 /phpstan.neon
+**/.php-cs-fixer.dist.php
