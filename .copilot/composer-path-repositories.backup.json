@@ -1,0 +1,16 @@
+﻿[
+    {
+        "type":  "path",
+        "url":  "../api-client-skeleton",
+        "options":  {
+                        "symlink":  true
+                    }
+    },
+    {
+        "type":  "path",
+        "url":  "../OAuth-v1",
+        "options":  {
+                        "symlink":  true
+                    }
+    }
+]
