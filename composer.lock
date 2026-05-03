@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9fd94be67ccbcf478ec73bc7b4801560",
+    "content-hash": "713a625967ff7cf535f1fc07bbfacd78",
     "packages": [
         {
             "name": "anibalealvarezs/api-client-skeleton",
@@ -12,19 +12,19 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:anibalealvarezs/api-client-skeleton.git",
-                "reference": "0425a0140f5dcc13794ff30a73f25e2c139ed801"
+                "reference": "315dcf1cfd24c01640a9acbadfa114cc6affb6c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://satis.anibalalvarez.com/dist/anibalealvarezs/api-client-skeleton/anibalealvarezs-api-client-skeleton-0425a0140f5dcc13794ff30a73f25e2c139ed801-zip-a889f7.zip",
-                "reference": "0425a0140f5dcc13794ff30a73f25e2c139ed801",
-                "shasum": "b8c7d428c4a92fc3e0ed84d6359834d0c9e20b2d"
+                "url": "https://satis.anibalalvarez.com/dist/anibalealvarezs/api-client-skeleton/anibalealvarezs-api-client-skeleton-315dcf1cfd24c01640a9acbadfa114cc6affb6c7-zip-302e5f.zip",
+                "reference": "315dcf1cfd24c01640a9acbadfa114cc6affb6c7",
+                "shasum": "461874323650ff531c9a8bc287a211afa512275d"
             },
             "require": {
                 "anibalealvarezs/oauth-v1": "@dev",
                 "ext-json": "*",
                 "guzzlehttp/guzzle": "^7.0",
-                "php": ">=8.1",
+                "php": ">=8.3",
                 "predis/predis": "^2.0 || ^3.0",
                 "symfony/yaml": "^6.0 || ^7.0"
             },
@@ -68,7 +68,7 @@
             "support": {
                 "issues": "https://github.com/anibalealvarezs/api-client-skeleton/issues"
             },
-            "time": "2026-04-28T01:48:02+00:00"
+            "time": "2026-05-03T13:13:06+00:00"
         },
         {
             "name": "anibalealvarezs/oauth-v1",
@@ -76,16 +76,16 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:anibalealvarezs/oauth-v1.git",
-                "reference": "3deb0aada91cdda04a30d66ae4c27c445be5a031"
+                "reference": "bfb6e971dbf5bf74b86aea6b20b1c15f6d0f4d77"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://satis.anibalalvarez.com/dist/anibalealvarezs/oauth-v1/anibalealvarezs-oauth-v1-3deb0aada91cdda04a30d66ae4c27c445be5a031-zip-19691e.zip",
-                "reference": "3deb0aada91cdda04a30d66ae4c27c445be5a031",
-                "shasum": "de9ceea2aa502d1793ec7779dfb6a0681363d71a"
+                "url": "https://satis.anibalalvarez.com/dist/anibalealvarezs/oauth-v1/anibalealvarezs-oauth-v1-bfb6e971dbf5bf74b86aea6b20b1c15f6d0f4d77-zip-5814e9.zip",
+                "reference": "bfb6e971dbf5bf74b86aea6b20b1c15f6d0f4d77",
+                "shasum": "c0a664105668aab0dad014de1fb8b1c871c6d930"
             },
             "require": {
-                "php": ">=8.1"
+                "php": ">=8.3"
             },
             "require-dev": {
                 "doctrine/instantiator": "^1.5",
@@ -127,7 +127,7 @@
             "support": {
                 "issues": "https://github.com/anibalealvarezs/OAuth-v1/issues"
             },
-            "time": "2026-04-28T01:33:56+00:00"
+            "time": "2026-05-03T13:10:46+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -3076,12 +3076,15 @@
         "anibalealvarezs/api-client-skeleton": 20,
         "anibalealvarezs/oauth-v1": 20
     },
-    "prefer-stable": false,
+    "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=8.1",
-        "ext-json": "*"
+        "ext-json": "*",
+        "php": ">=8.3"
     },
     "platform-dev": [],
+    "platform-overrides": {
+        "php": "8.3.0"
+    },
     "plugin-api-version": "2.3.0"
 }

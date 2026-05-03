@@ -171,6 +171,21 @@ class ApisHubApi extends ApiKeyClient
 
     /**
      * 📝 CRUD: Perform an aggregation query on base entities.
+     * 
+     * @param string $entity The target entity name.
+     * @param array $payload The aggregation parameters:
+     *  - **aggregations** (array): Metrics to aggregate (e.g., `['clicks' => 'clicks', 'ctr' => 'ctr']`). Supports diversified/weighted metric strategies internally.
+     *  - **groupBy** (array): Fields to group by (e.g., `['campaign_id', 'adset_id']`).
+     *  - **startDate** (string|null): Start date for the aggregation period (Y-m-d).
+     *  - **endDate** (string|null): End date for the aggregation period (Y-m-d).
+     *  - **orderBy** (string|null): Field to sort by.
+     *  - **orderDir** (string): 'ASC' or 'DESC'.
+     *  - **filters** (array|null): Standard and advanced filters. Supported advanced snapshot keys:
+     *      - `period` (string): 'daily', 'lifetime', etc.
+     *      - `snapshot_delta` (bool): True to return the delta between the start and end snapshots (only for channeled metrics).
+     *      - `latest_snapshot` (bool): True to aggregate based on the latest available snapshot.
+     *      - `snapshot_fallback_mode` (string): 'strict' or 'resilient'.
+     * 
      * @throws GuzzleException
      */
     public function aggregateEntities(string $entity, array $payload): array
@@ -211,6 +226,22 @@ class ApisHubApi extends ApiKeyClient
 
     /**
      * 🧬 Channeled CRUD: Perform an aggregation query on channeled entities.
+     * 
+     * @param string $channel The channel ID (e.g. facebook_marketing, google_search_console).
+     * @param string $entity The target entity name.
+     * @param array $payload The aggregation parameters:
+     *  - **aggregations** (array): Metrics to aggregate (e.g., `['clicks' => 'clicks', 'ctr' => 'ctr']`). Supports diversified/weighted metric strategies internally.
+     *  - **groupBy** (array): Fields to group by (e.g., `['campaign_id', 'adset_id']`).
+     *  - **startDate** (string|null): Start date for the aggregation period (Y-m-d).
+     *  - **endDate** (string|null): End date for the aggregation period (Y-m-d).
+     *  - **orderBy** (string|null): Field to sort by.
+     *  - **orderDir** (string): 'ASC' or 'DESC'.
+     *  - **filters** (array|null): Standard and advanced filters. Supported advanced snapshot keys:
+     *      - `period` (string): 'daily', 'lifetime', etc.
+     *      - `snapshot_delta` (bool): True to return the delta between the start and end snapshots (only for channeled metrics).
+     *      - `latest_snapshot` (bool): True to aggregate based on the latest available snapshot.
+     *      - `snapshot_fallback_mode` (string): 'strict' or 'resilient'.
+     *
      * @throws GuzzleException
      */
     public function aggregateChanneled(string $channel, string $entity, array $payload): array
