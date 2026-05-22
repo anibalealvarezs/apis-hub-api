@@ -188,9 +188,10 @@ class ApisHubApi extends ApiKeyClient
      * 
      * @throws GuzzleException
      */
-    public function aggregateEntities(string $entity, array $payload): array
+    public function aggregateEntities(string $entity, array|AggregationQuery $payload): array
     {
-        $response = $this->performRequest(method: 'POST', endpoint: "entity/{$entity}/aggregate", body: json_encode($payload));
+        $payloadData = $payload instanceof AggregationQuery ? $payload->build() : $payload;
+        $response = $this->performRequest(method: 'POST', endpoint: "entity/{$entity}/aggregate", body: json_encode($payloadData));
         return json_decode($response->getBody()->getContents(), true);
     }
 
@@ -244,9 +245,10 @@ class ApisHubApi extends ApiKeyClient
      *
      * @throws GuzzleException
      */
-    public function aggregateChanneled(string $channel, string $entity, array $payload): array
+    public function aggregateChanneled(string $channel, string $entity, array|AggregationQuery $payload): array
     {
-        $response = $this->performRequest(method: 'POST', endpoint: "{$channel}/{$entity}/aggregate", body: json_encode($payload));
+        $payloadData = $payload instanceof AggregationQuery ? $payload->build() : $payload;
+        $response = $this->performRequest(method: 'POST', endpoint: "{$channel}/{$entity}/aggregate", body: json_encode($payloadData));
         return json_decode($response->getBody()->getContents(), true);
     }
 
@@ -441,6 +443,46 @@ class ApisHubApi extends ApiKeyClient
     public function flushCache(): array
     {
         $response = $this->performRequest(method: 'POST', endpoint: 'api/config-manager/flush-cache');
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
+     * 📊 Synchronization: Fetch current synchronization status.
+     * @throws GuzzleException
+     */
+    public function getSyncStatus(array $params = []): array
+    {
+        $response = $this->performRequest(method: 'GET', endpoint: 'api/sync/status', query: $params);
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
+     * 📊 Synchronization: Fetch synchronization stats per account/channel.
+     * @throws GuzzleException
+     */
+    public function getSyncAccountStats(array $params = []): array
+    {
+        $response = $this->performRequest(method: 'GET', endpoint: 'api/sync/account-stats', query: $params);
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
+     * 🛰️ Public: Fetch public/shared resource data.
+     * @throws GuzzleException
+     */
+    public function getPublicResourceData(string $channel, string $resource, array $params = []): array
+    {
+        $response = $this->performRequest(method: 'GET', endpoint: "api/v1/public/{$channel}/{$resource}", query: $params);
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
+     * 🔍 Monitoring: Get OpenAPI/Swagger API specifications.
+     * @throws GuzzleException
+     */
+    public function getApiSpec(): array
+    {
+        $response = $this->performRequest(method: 'GET', endpoint: 'api/spec');
         return json_decode($response->getBody()->getContents(), true);
     }
 }
