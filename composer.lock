@@ -12,13 +12,13 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:anibalealvarezs/api-client-skeleton.git",
-                "reference": "3cf946c4a8bc744d4b189e6743b958d1147aa92a"
+                "reference": "66c11250f11740288ad53a2dc757ddb9e8915761"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://satis.anibalalvarez.com/dist/anibalealvarezs/api-client-skeleton/anibalealvarezs-api-client-skeleton-3cf946c4a8bc744d4b189e6743b958d1147aa92a-zip-3c18c0.zip",
-                "reference": "3cf946c4a8bc744d4b189e6743b958d1147aa92a",
-                "shasum": "82cfbcc8b586f0d22905337c77bae615470f5839"
+                "url": "https://satis.anibalalvarez.com/dist/anibalealvarezs/api-client-skeleton/anibalealvarezs-api-client-skeleton-66c11250f11740288ad53a2dc757ddb9e8915761-zip-5a2bf2.zip",
+                "reference": "66c11250f11740288ad53a2dc757ddb9e8915761",
+                "shasum": "114b326522a3c35b4b7bd6b8e2d24af4ba7ada33"
             },
             "require": {
                 "anibalealvarezs/oauth-v1": "^1.0.0",
@@ -67,7 +67,7 @@
             "support": {
                 "issues": "https://github.com/anibalealvarezs/api-client-skeleton/issues"
             },
-            "time": "2026-05-19T13:48:15+00:00"
+            "time": "2026-05-24T19:05:41+00:00"
         },
         {
             "name": "anibalealvarezs/oauth-v1",
@@ -129,16 +129,16 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "7.10.3",
+            "version": "7.10.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "47ba23c7a55247e2e1b7407aca90e9bbed0d9d86"
+                "reference": "aec528da477062d3af11f51e6b33402be233b21f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/47ba23c7a55247e2e1b7407aca90e9bbed0d9d86",
-                "reference": "47ba23c7a55247e2e1b7407aca90e9bbed0d9d86",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/aec528da477062d3af11f51e6b33402be233b21f",
+                "reference": "aec528da477062d3af11f51e6b33402be233b21f",
                 "shasum": ""
             },
             "require": {
@@ -236,7 +236,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/guzzle/issues",
-                "source": "https://github.com/guzzle/guzzle/tree/7.10.3"
+                "source": "https://github.com/guzzle/guzzle/tree/7.10.4"
             },
             "funding": [
                 {
@@ -252,7 +252,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-05-20T22:59:19+00:00"
+            "time": "2026-05-22T19:00:53+00:00"
         },
         {
             "name": "guzzlehttp/promises",
