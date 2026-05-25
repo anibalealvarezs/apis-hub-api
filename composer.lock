@@ -12,13 +12,13 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:anibalealvarezs/api-client-skeleton.git",
-                "reference": "66c11250f11740288ad53a2dc757ddb9e8915761"
+                "reference": "0d6b0fa325304714a54562b8877097e1eaaaccb4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://satis.anibalalvarez.com/dist/anibalealvarezs/api-client-skeleton/anibalealvarezs-api-client-skeleton-66c11250f11740288ad53a2dc757ddb9e8915761-zip-5a2bf2.zip",
-                "reference": "66c11250f11740288ad53a2dc757ddb9e8915761",
-                "shasum": "114b326522a3c35b4b7bd6b8e2d24af4ba7ada33"
+                "url": "https://satis.anibalalvarez.com/dist/anibalealvarezs/api-client-skeleton/anibalealvarezs-api-client-skeleton-0d6b0fa325304714a54562b8877097e1eaaaccb4-zip-7c0cc8.zip",
+                "reference": "0d6b0fa325304714a54562b8877097e1eaaaccb4",
+                "shasum": "6ece9dfef280cfb7a03117e3a747b8824ec94086"
             },
             "require": {
                 "anibalealvarezs/oauth-v1": "^1.0.0",
@@ -50,7 +50,7 @@
             ],
             "authors": [
                 {
-                    "name": "Aní­bal Álvarez",
+                    "name": "Aníbal Álvarez",
                     "email": "anibalealvarezs@gmail.com"
                 }
             ],
@@ -67,7 +67,7 @@
             "support": {
                 "issues": "https://github.com/anibalealvarezs/api-client-skeleton/issues"
             },
-            "time": "2026-05-24T19:05:41+00:00"
+            "time": "2026-05-25T00:43:10+00:00"
         },
         {
             "name": "anibalealvarezs/oauth-v1",
@@ -75,13 +75,13 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:anibalealvarezs/oauth-v1.git",
-                "reference": "c82a6c0d693ee5f824e688e0a8d2ba7d2d815746"
+                "reference": "61ce2013dedb18af86113a51fdbf62593960afd7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://satis.anibalalvarez.com/dist/anibalealvarezs/oauth-v1/anibalealvarezs-oauth-v1-c82a6c0d693ee5f824e688e0a8d2ba7d2d815746-zip-b7ce1a.zip",
-                "reference": "c82a6c0d693ee5f824e688e0a8d2ba7d2d815746",
-                "shasum": "43cc8c1ea67d8ccd7b9c5a650b2b5986735a1dd9"
+                "url": "https://satis.anibalalvarez.com/dist/anibalealvarezs/oauth-v1/anibalealvarezs-oauth-v1-61ce2013dedb18af86113a51fdbf62593960afd7-zip-8eb3ca.zip",
+                "reference": "61ce2013dedb18af86113a51fdbf62593960afd7",
+                "shasum": "60444bf49a684c0e9c7e874b6f6a49786d74f6ee"
             },
             "require": {
                 "php": ">=8.3"
@@ -125,7 +125,7 @@
             "support": {
                 "issues": "https://github.com/anibalealvarezs/OAuth-v1/issues"
             },
-            "time": "2026-05-19T13:48:10+00:00"
+            "time": "2026-05-24T22:03:46+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
