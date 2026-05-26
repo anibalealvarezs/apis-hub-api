@@ -47,6 +47,16 @@ class ApisHubApi extends ApiKeyClient
     }
 
     /**
+     * 🛰️ Management: Trigger a lightweight synchronization start.
+     * @throws GuzzleException
+     */
+    public function startSync(): array
+    {
+        $response = $this->performRequest(method: 'POST', endpoint: 'api/management/start-sync');
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
      * 🛰️ Management: Perform a TOTAL reset of a specific channel (Atomic Cleanup).
      * @param string $channel
      * @throws GuzzleException
