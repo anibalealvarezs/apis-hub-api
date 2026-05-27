@@ -477,6 +477,21 @@ class ApisHubApi extends ApiKeyClient
     }
 
     /**
+     * 📊 Synchronization: Reschedule jobs that failed due to permanent authentication errors.
+     * @param string $channel
+     * @throws GuzzleException
+     */
+    public function rescheduleAuthFailedJobs(string $channel): array
+    {
+        $response = $this->performRequest(
+            method: 'POST',
+            endpoint: 'api/sync/reschedule-auth-failed',
+            body: json_encode(['channel' => $channel])
+        );
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
      * 🛰️ Public: Fetch public/shared resource data.
      * @throws GuzzleException
      */
