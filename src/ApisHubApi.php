@@ -355,6 +355,16 @@ class ApisHubApi extends ApiKeyClient
     }
 
     /**
+     * 🔍 Monitoring: Get pure sync telemetry payload.
+     * @throws GuzzleException
+     */
+    public function getSyncTelemetry(): array
+    {
+        $response = $this->performRequest(method: 'GET', endpoint: 'api/sync/status');
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
      * 🔍 Monitoring: Get lightweight infra status.
      * @throws GuzzleException
      */
