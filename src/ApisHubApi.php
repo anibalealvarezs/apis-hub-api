@@ -110,6 +110,20 @@ class ApisHubApi extends ApiKeyClient
     }
 
     /**
+     * ☢️ Synchronization: Nuclear Historical Resync.
+     * Clears all jobs and telemetry, forcing a complete historical sync.
+     * @throws GuzzleException
+     */
+    public function triggerHistoricalResync(): array
+    {
+        $response = $this->performRequest(
+            method: 'POST',
+            endpoint: "cache/reset-historical"
+        );
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
      * 📊 Synchronization: Interrupt all running jobs.
      * @throws GuzzleException
      */
