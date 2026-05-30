@@ -114,11 +114,12 @@ class ApisHubApi extends ApiKeyClient
      * Clears all jobs and telemetry, forcing a complete historical sync.
      * @throws GuzzleException
      */
-    public function triggerHistoricalResync(): array
+    public function triggerHistoricalResync(string $channel = 'all'): array
     {
         $response = $this->performRequest(
             method: 'POST',
-            endpoint: "cache/reset-historical"
+            endpoint: "cache/reset-historical",
+            body: json_encode(['channel' => $channel])
         );
         return json_decode($response->getBody()->getContents(), true);
     }
