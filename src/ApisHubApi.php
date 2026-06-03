@@ -221,6 +221,21 @@ class ApisHubApi extends ApiKeyClient
     }
 
     /**
+     * 🧮 Analytics: Compute a KPI using a mathematical AST.
+     * @param array $payload Must include the 'ast' array, and optional 'filters'.
+     * @throws GuzzleException
+     */
+    public function computeKpi(array $payload): array
+    {
+        $response = $this->performRequest(
+            method: 'POST',
+            endpoint: 'api/compute-kpi',
+            body: json_encode($payload)
+        );
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
      * 🧬 Channeled CRUD: List entities filtered by channel.
      * @throws GuzzleException
      */
