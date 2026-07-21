@@ -532,6 +532,30 @@ class ApisHubApi extends ApiKeyClient
     }
 
     /**
+     * 📊 Synchronization: Trigger historical nuclear resync for all, specific channel, or single asset.
+     * @param string|null $channel
+     * @param string|null $asset
+     * @throws GuzzleException
+     */
+    public function resetHistoricalResync(?string $channel = null, ?string $asset = null): array
+    {
+        $payload = [];
+        if ($channel && $channel !== 'all') {
+            $payload['channel'] = $channel;
+        }
+        if ($asset) {
+            $payload['asset'] = $asset;
+        }
+
+        $response = $this->performRequest(
+            method: 'POST',
+            endpoint: 'api/cache/reset-historical',
+            body: json_encode($payload)
+        );
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
      * 🛰️ Public: Fetch public/shared resource data.
      * @throws GuzzleException
      */
