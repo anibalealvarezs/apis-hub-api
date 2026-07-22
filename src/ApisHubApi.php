@@ -549,7 +549,7 @@ class ApisHubApi extends ApiKeyClient
 
         $response = $this->performRequest(
             method: 'POST',
-            endpoint: 'cache/reset-historical',
+            endpoint: 'api/cache/reset-historical',
             body: json_encode($payload)
         );
         return json_decode($response->getBody()->getContents(), true);
