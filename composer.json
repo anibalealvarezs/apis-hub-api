@@ -13,7 +13,7 @@
   "homepage": "https://github.com/anibalealvarezs/apis-hub-api",
   "authors": [
     {
-      "name": "AnÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â­bal ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Âlvarez",
+      "name": "Aníbal Álvarez",
       "email": "anibalealvarezs@gmail.com"
     }
   ],
@@ -27,12 +27,6 @@
     "anibalealvarezs/oauth-v1": "^1.0.0",
     "php": ">=8.3"
   },
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://satis.anibalalvarez.com/"
-    }
-  ],
   "autoload": {
     "psr-4": {
       "Anibalealvarezs\\ApisHubApi\\": "src"
@@ -61,5 +55,11 @@
       "php": "8.3.0"
     }
   },
-  "prefer-stable": true
+  "prefer-stable": true,
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://satis.anibalalvarez.com/"
+    }
+  ]
 }
