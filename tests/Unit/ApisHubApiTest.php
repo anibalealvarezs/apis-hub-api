@@ -12,6 +12,19 @@ use PHPUnit\Framework\TestCase;
 
 class ApisHubApiTest extends TestCase
 {
+    public function testEntityAttributeDiscoveryPreservesAssetScope(): void
+    {
+        $mock = new MockHandler([new Response(200, [], json_encode(['status' => 'success', 'data' => []]))]);
+        $client = $this->createMockedClient(mock: $mock);
+        $payload = ['account' => ['42'], 'relation' => 'channeledCampaign', 'values' => true];
+        $client->getEntityAttributes('facebook_marketing', $payload);
+        $request = $mock->getLastRequest();
+        self::assertSame('POST', $request->getMethod());
+        self::assertSame('/facebook_marketing/metric/attributes', $request->getUri()->getPath());
+        self::assertSame($payload, json_decode((string)$request->getBody(), true));
+        self::assertSame($this->apiKey, $request->getHeaderLine('X-Admin-API-Key'));
+    }
+
     protected string $baseUrl = 'https://hub.example.com';
     protected string $apiKey = 'test-api-key-123';
 

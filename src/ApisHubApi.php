@@ -7,6 +7,13 @@ use GuzzleHttp\Exception\GuzzleException;
 
 class ApisHubApi extends ApiKeyClient
 {
+    /** Discover mapped entity attributes and account-scoped facet values. */
+    public function getEntityAttributes(string $channel, array $payload = []): array
+    {
+        $response = $this->performRequest(method: 'POST', endpoint: rawurlencode($channel).'/metric/attributes', body: json_encode($payload));
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
     /**
      * @param string $baseUrl The base URL of the APIs Hub Node (without /api path)
      * @param string $apiKey The admin API key (X-Admin-API-Key)
