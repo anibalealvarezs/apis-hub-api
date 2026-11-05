@@ -402,4 +402,71 @@ class ApisHubApiTest extends TestCase
             $q5->build()
         );
     }
+
+    public function testCatalogReadMethodsPreserveScopeAndPayloads(): void
+    {
+        $mock = new MockHandler([
+            new Response(200, [], json_encode(['status' => 'success', 'data' => ['contract_version' => 1]])),
+            new Response(200, [], json_encode(['status' => 'success', 'data' => [['id' => 301]], 'meta' => ['total' => 1]])),
+            new Response(200, [], json_encode(['status' => 'success', 'data' => ['record' => ['id' => 301]]])),
+            new Response(200, [], json_encode(['status' => 'success', 'data' => ['data' => [['kind' => 'created']]]])),
+        ]);
+
+        $client = $this->createMockedClient(mock: $mock);
+        $scope = ['channels' => ['facebook_marketing' => ['account_ids' => [101], 'platform_ids' => ['act_111']]]];
+
+        // 1. getCatalogCapabilities
+        $caps = $client->getCatalogCapabilities(['authorized_scope' => $scope]);
+        $this->assertEquals('success', $caps['status']);
+        $req1 = $mock->getLastRequest();
+        // Wait: MockHandler::getLastRequest() returns the most recent request after each call, so we test sequentially
+
+        $mock2 = new MockHandler([
+            new Response(200, [], json_encode(['status' => 'success', 'data' => ['contract_version' => 1]])),
+            new Response(200, [], json_encode(['status' => 'success', 'data' => [['id' => 301]], 'meta' => ['total' => 1]])),
+            new Response(200, [], json_encode(['status' => 'success', 'data' => ['record' => ['id' => 301]]])),
+            new Response(200, [], json_encode(['status' => 'success', 'data' => ['data' => [['kind' => 'created']]]])),
+        ]);
+        $client2 = $this->createMockedClient(mock: $mock2);
+
+        $client2->getCatalogCapabilities(['authorized_scope' => $scope]);
+        $this->assertSame('POST', $mock2->getLastRequest()->getMethod());
+        $this->assertSame('/api/catalog/capabilities', $mock2->getLastRequest()->getUri()->getPath());
+        $this->assertSame(['authorized_scope' => $scope], json_decode((string)$mock2->getLastRequest()->getBody(), true));
+
+        $client2->listCatalogEntities('campaigns', ['authorized_scope' => $scope, 'search' => 'Alpha']);
+        $this->assertSame('POST', $mock2->getLastRequest()->getMethod());
+        $this->assertSame('/api/catalog/list', $mock2->getLastRequest()->getUri()->getPath());
+        $this->assertSame([
+            'authorized_scope' => $scope,
+            'search'           => 'Alpha',
+            'entity_type'      => 'campaigns',
+        ], json_decode((string)$mock2->getLastRequest()->getBody(), true));
+
+        $client2->getCatalogEntityProfile('campaigns', 'channeled:facebook_marketing:campaigns:301', [
+            'authorized_scope' => $scope,
+            'date_range'       => ['start_date' => '2026-03-01', 'end_date' => '2026-03-31'],
+        ]);
+        $this->assertSame('POST', $mock2->getLastRequest()->getMethod());
+        $this->assertSame('/api/catalog/profile', $mock2->getLastRequest()->getUri()->getPath());
+        $this->assertSame([
+            'authorized_scope' => $scope,
+            'date_range'       => ['start_date' => '2026-03-01', 'end_date' => '2026-03-31'],
+            'entity_type'      => 'campaigns',
+            'reference'        => 'channeled:facebook_marketing:campaigns:301',
+        ], json_decode((string)$mock2->getLastRequest()->getBody(), true));
+
+        $client2->getCatalogEntityActivity('campaigns', 'channeled:facebook_marketing:campaigns:301', [
+            'authorized_scope' => $scope,
+            'sort'             => 'newest',
+        ]);
+        $this->assertSame('POST', $mock2->getLastRequest()->getMethod());
+        $this->assertSame('/api/catalog/activity', $mock2->getLastRequest()->getUri()->getPath());
+        $this->assertSame([
+            'authorized_scope' => $scope,
+            'sort'             => 'newest',
+            'entity_type'      => 'campaigns',
+            'reference'        => 'channeled:facebook_marketing:campaigns:301',
+        ], json_decode((string)$mock2->getLastRequest()->getBody(), true));
+    }
 }

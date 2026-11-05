@@ -581,4 +581,69 @@ class ApisHubApi extends ApiKeyClient
         $response = $this->performRequest(method: 'GET', endpoint: 'api/spec');
         return json_decode($response->getBody()->getContents(), true);
     }
+
+    /**
+     * 📚 Catalog: Discover supported catalog entity types, filters, sortable fields, and capabilities.
+     * @throws GuzzleException
+     */
+    public function getCatalogCapabilities(array $payload = []): array
+    {
+        $response = $this->performRequest(
+            method: 'POST',
+            endpoint: 'api/catalog/capabilities',
+            body: json_encode($payload)
+        );
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
+     * 📚 Catalog: List catalog entities within the caller's authorized scope.
+     * @throws GuzzleException
+     */
+    public function listCatalogEntities(string $entityType, array $payload = []): array
+    {
+        $body = array_merge($payload, ['entity_type' => $entityType]);
+        $response = $this->performRequest(
+            method: 'POST',
+            endpoint: 'api/catalog/list',
+            body: json_encode($body)
+        );
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
+     * 📚 Catalog: Fetch a catalog entity profile, related hierarchy, and entity-grain metrics.
+     * @throws GuzzleException
+     */
+    public function getCatalogEntityProfile(string $entityType, string $reference, array $payload = []): array
+    {
+        $body = array_merge($payload, [
+            'entity_type' => $entityType,
+            'reference'   => $reference,
+        ]);
+        $response = $this->performRequest(
+            method: 'POST',
+            endpoint: 'api/catalog/profile',
+            body: json_encode($body)
+        );
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
+     * 📚 Catalog: Fetch recorded lifecycle milestones and sync activity for a catalog entity.
+     * @throws GuzzleException
+     */
+    public function getCatalogEntityActivity(string $entityType, string $reference, array $payload = []): array
+    {
+        $body = array_merge($payload, [
+            'entity_type' => $entityType,
+            'reference'   => $reference,
+        ]);
+        $response = $this->performRequest(
+            method: 'POST',
+            endpoint: 'api/catalog/activity',
+            body: json_encode($body)
+        );
+        return json_decode($response->getBody()->getContents(), true);
+    }
 }
