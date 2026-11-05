@@ -9,5 +9,6 @@
 - Use `D:\laragon\www\_shared\AGENTS.md` and `D:\laragon\www\_shared\MEMORY.md` for cross-repository protocols and workspace-wide learnings.
 - Keep secrets, credentials, tokens, and private endpoints out of this file.
 ## Current notes
+- Catalog Read SDK methods (2026-11-05): Added `getCatalogCapabilities(array $payload = [])`, `listCatalogEntities(string $entityType, array $payload = [])`, `getCatalogEntityProfile(string $entityType, string $reference, array $payload = [])`, and `getCatalogEntityActivity(string $entityType, string $reference, array $payload = [])` to `ApisHubApi`, posting to `/api/catalog/capabilities`, `/api/catalog/list`, `/api/catalog/profile`, and `/api/catalog/activity`. Covered in `tests/Unit/ApisHubApiTest.php`.
 - `getEntityAttributes($channel, $payload = [])` (2026-10-29) posts to `/{channel}/metric/attributes` for normalized scalar entity metadata and optionally account-scoped facet values. Existing `AggregationQuery::filter()` accepts `attributes.<relation>.<property>` predicates, lists and typed range operators unchanged. Requires the matching tenant endpoint.
 - Internal API client for APIs Hub server interactions.
