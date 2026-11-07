@@ -646,4 +646,33 @@ class ApisHubApi extends ApiKeyClient
         );
         return json_decode($response->getBody()->getContents(), true);
     }
+
+    /**
+     * 📚 Catalog: Discover supported entity aggregation capabilities (measures, dimensions, time groupings).
+     * @throws GuzzleException
+     */
+    public function getCatalogAggregateCapabilities(array $payload = []): array
+    {
+        $response = $this->performRequest(
+            method: 'POST',
+            endpoint: 'api/catalog/aggregate/capabilities',
+            body: json_encode($payload)
+        );
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
+     * 📚 Catalog: Aggregate unaggregated entity records across authorized scope.
+     * @throws GuzzleException
+     */
+    public function aggregateCatalogEntities(string $entityType, array $payload = []): array
+    {
+        $body = array_merge($payload, ['entity_type' => $entityType]);
+        $response = $this->performRequest(
+            method: 'POST',
+            endpoint: 'api/catalog/aggregate',
+            body: json_encode($body)
+        );
+        return json_decode($response->getBody()->getContents(), true);
+    }
 }
