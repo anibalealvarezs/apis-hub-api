@@ -469,4 +469,45 @@ class ApisHubApiTest extends TestCase
             'reference'        => 'channeled:facebook_marketing:campaigns:301',
         ], json_decode((string)$mock2->getLastRequest()->getBody(), true));
     }
+
+    public function testCatalogAggregateMethodsPreserveScopeAndPayloads(): void
+    {
+        $mock = new MockHandler([
+            new Response(200, [], json_encode(['status' => 'success', 'data' => ['orders' => ['measures' => ['revenue']]]])),
+            new Response(200, [], json_encode(['status' => 'success', 'data' => [['order_count' => 5, 'revenue' => 250.0]]])),
+        ]);
+
+        $client = $this->createMockedClient(mock: $mock);
+        $scope = ['channels' => ['mailchimp' => ['account_ids' => [101]]]];
+
+        $caps = $client->getCatalogAggregateCapabilities(['authorized_scope' => $scope]);
+        $this->assertEquals('success', $caps['status']);
+        $req1 = $mock->getLastRequest();
+
+        // Sequential test
+        $mock2 = new MockHandler([
+            new Response(200, [], json_encode(['status' => 'success', 'data' => ['orders' => ['measures' => ['revenue']]]])),
+            new Response(200, [], json_encode(['status' => 'success', 'data' => [['order_count' => 5, 'revenue' => 250.0]]])),
+        ]);
+        $client2 = $this->createMockedClient(mock: $mock2);
+
+        $client2->getCatalogAggregateCapabilities(['authorized_scope' => $scope]);
+        $this->assertSame('POST', $mock2->getLastRequest()->getMethod());
+        $this->assertSame('/api/catalog/aggregate/capabilities', $mock2->getLastRequest()->getUri()->getPath());
+        $this->assertSame(['authorized_scope' => $scope], json_decode((string)$mock2->getLastRequest()->getBody(), true));
+
+        $client2->aggregateCatalogEntities('orders', [
+            'authorized_scope' => $scope,
+            'measures' => ['order_count', 'revenue'],
+            'dimensions' => ['store'],
+        ]);
+        $this->assertSame('POST', $mock2->getLastRequest()->getMethod());
+        $this->assertSame('/api/catalog/aggregate', $mock2->getLastRequest()->getUri()->getPath());
+        $this->assertSame([
+            'authorized_scope' => $scope,
+            'measures'         => ['order_count', 'revenue'],
+            'dimensions'       => ['store'],
+            'entity_type'      => 'orders',
+        ], json_decode((string)$mock2->getLastRequest()->getBody(), true));
+    }
 }
