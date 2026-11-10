@@ -19,6 +19,7 @@ class AggregationQuery
     private ?string $orderBy = null;
     private string $orderDir = 'ASC';
     private array $filters = [];
+    private string $currencyMode = 'project';
 
     /**
      * Create a new fluent AggregationQuery instance.
@@ -26,6 +27,15 @@ class AggregationQuery
     public static function create(): self
     {
         return new self();
+    }
+
+    /**
+     * Set currency mode ('project' for consolidated project base currency, 'original' for native source currency).
+     */
+    public function setCurrencyMode(string $mode = 'project'): self
+    {
+        $this->currencyMode = in_array(strtolower($mode), ['original', 'native'], true) ? 'original' : 'project';
+        return $this;
     }
 
     /**
@@ -133,6 +143,10 @@ class AggregationQuery
         }
         if (!empty($this->filters)) {
             $payload['filters'] = $this->filters;
+        }
+
+        if ($this->currencyMode !== 'project') {
+            $payload['currency_mode'] = $this->currencyMode;
         }
 
         return $payload;
