@@ -648,6 +648,22 @@ class ApisHubApi extends ApiKeyClient
     }
 
     /**
+     * 📚 Catalog: Execute a typed structured report (e.g. sku_refund_cancellation_rate, cohort_retention, cross_channel_attribution, pre_purchase_touches, repeat_frequency).
+     * @throws GuzzleException
+     */
+    public function getCatalogReport(string $reportType, array $payload = []): array
+    {
+        $body = array_merge($payload, ['report_type' => $reportType]);
+        $response = $this->performRequest(
+            method: 'POST',
+            endpoint: 'api/catalog/report',
+            body: json_encode($body)
+        );
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
+     * @deprecated Use getCatalogCapabilities() and inspect data.metric_aggregation / data.catalog_reports instead.
      * 📚 Catalog: Discover supported entity aggregation capabilities (measures, dimensions, time groupings).
      * @throws GuzzleException
      */
@@ -662,6 +678,7 @@ class ApisHubApi extends ApiKeyClient
     }
 
     /**
+     * @deprecated Use aggregateChanneled(..., AggregationQuery::forMetricSeries()) for numeric metrics or getCatalogReport() for structured reports.
      * 📚 Catalog: Aggregate unaggregated entity records across authorized scope.
      * @throws GuzzleException
      */

@@ -20,6 +20,8 @@ class AggregationQuery
     private string $orderDir = 'ASC';
     private array $filters = [];
     private string $currencyMode = 'project';
+    private ?int $contractVersion = null;
+    private ?string $metricChannel = null;
 
     /**
      * Create a new fluent AggregationQuery instance.
@@ -27,6 +29,19 @@ class AggregationQuery
     public static function create(): self
     {
         return new self();
+    }
+
+    /**
+     * Select contract v1 after confirming that the tenant advertises it.
+     * The entity route requires a channel. The channel route already supplies it.
+     */
+    public static function forMetricSeries(?string $channel = null): self
+    {
+        $query = new self();
+        $query->contractVersion = 1;
+        $query->metricChannel = $channel;
+
+        return $query;
     }
 
     /**
@@ -130,6 +145,13 @@ class AggregationQuery
             'aggregations' => $this->aggregations,
             'groupBy' => $this->groupBy,
         ];
+
+        if ($this->contractVersion !== null) {
+            $payload['contractVersion'] = $this->contractVersion;
+            if ($this->metricChannel !== null) {
+                $payload['channel'] = $this->metricChannel;
+            }
+        }
 
         if ($this->startDate !== null) {
             $payload['startDate'] = $this->startDate;

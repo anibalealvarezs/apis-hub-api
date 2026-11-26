@@ -335,6 +335,36 @@ class ApisHubApiTest extends TestCase
         $this->assertEquals($expected, $built);
     }
 
+    public function testMetricSeriesQueryUsesBothExistingAggregateEndpoints(): void
+    {
+        foreach ([null, 'shopify'] as $channel) {
+            $envelope = [
+                'status' => 'success',
+                'data' => ['series' => [['alias' => 'aov', 'points' => [['value' => 40, 'state' => 'measured']]]]],
+                'meta' => ['contractVersion' => 1],
+            ];
+            $mock = new MockHandler([new Response(200, [], json_encode($envelope))]);
+            $client = $this->createMockedClient(mock: $mock);
+            $query = AggregationQuery::forMetricSeries($channel)
+                ->select(['aov' => 'orders.average_order_value'])
+                ->dateRange('2026-04-01', '2026-04-02')
+                ->groupBy(['lifetime'])
+                ->filter('store', ['type' => 'channeled_store', 'ids' => ['11']]);
+
+            $result = $channel === null
+                ? $client->aggregateChanneled('shopify', 'metric', $query)
+                : $client->aggregateEntities('metric', $query);
+            $request = $mock->getLastRequest();
+            self::assertSame($channel === null ? '/shopify/metric/aggregate' : '/entity/metric/aggregate', $request->getUri()->getPath());
+            $body = json_decode((string) $request->getBody(), true);
+            self::assertSame(1, $body['contractVersion']);
+            self::assertSame($channel, $body['channel'] ?? null);
+            self::assertSame(['lifetime'], $body['groupBy']);
+            self::assertSame(['type' => 'channeled_store', 'ids' => ['11']], $body['filters']['store']);
+            self::assertSame($envelope, $result);
+        }
+    }
+
     public function testDashboardSampleQueries(): void
     {
         // 1. Query 1
@@ -509,5 +539,32 @@ class ApisHubApiTest extends TestCase
             'dimensions'       => ['store'],
             'entity_type'      => 'orders',
         ], json_decode((string)$mock2->getLastRequest()->getBody(), true));
+    }
+
+    public function testCatalogReportMethodPreservesScopeAndReportType(): void
+    {
+        $mock = new MockHandler([
+            new Response(200, [], json_encode([
+                'status' => 'success',
+                'data' => ['summary' => ['matched' => 3]],
+                'meta' => ['contractVersion' => 1, 'report_type' => 'cross_channel_attribution'],
+            ])),
+        ]);
+        $client = $this->createMockedClient(mock: $mock);
+        $scope = ['channels' => ['shopify' => ['platform_ids' => ['11']]]];
+
+        $res = $client->getCatalogReport('cross_channel_attribution', [
+            'authorized_scope' => $scope,
+            'date_range' => ['start' => '2026-04-01', 'end' => '2026-04-02'],
+        ]);
+
+        $this->assertSame('success', $res['status']);
+        $this->assertSame('POST', $mock->getLastRequest()->getMethod());
+        $this->assertSame('/api/catalog/report', $mock->getLastRequest()->getUri()->getPath());
+        $this->assertSame([
+            'authorized_scope' => $scope,
+            'date_range' => ['start' => '2026-04-01', 'end' => '2026-04-02'],
+            'report_type' => 'cross_channel_attribution',
+        ], json_decode((string) $mock->getLastRequest()->getBody(), true));
     }
 }
